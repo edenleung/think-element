@@ -143,7 +143,10 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.$store.dispatch('deleteGroup', row.id)
+          this.$store.dispatch('deleteGroup', row.id).then(() => {
+            this.dialogVisible = false
+            this.fetch()
+          })
         })
         .catch(() => {})
     },

@@ -92,7 +92,8 @@ export const asyncRouterMap = [
     },
     children: [
       { path: 'rules', component: () => import('@/views/auth/rules/index'), name: 'rules', meta: { title: '规则管理' }},
-      { path: 'groups', component: () => import('@/views/auth/group/index'), name: 'groups', meta: { title: '角色管理' }}
+      { path: 'groups', component: () => import('@/views/auth/group/index'), name: 'groups', meta: { title: '角色管理' }},
+      { path: 'users', component: () => import('@/views/auth/user/index'), name: 'users', meta: { title: '用户管理' }}
     ]
   },
   { path: '*', redirect: '/404', hidden: true }
