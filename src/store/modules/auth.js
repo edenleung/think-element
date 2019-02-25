@@ -1,6 +1,6 @@
 import { ruleList, ruleDelete, addRule, editRule } from '@/api/auth/rule'
 import { groupList, groupDelete, addGroup, editGroup } from '@/api/auth/group'
-import { saveUser } from '@/api/auth/user'
+import { addUser, getUserList, saveUser, deleteUser } from '@/api/auth/user'
 
 const auth = {
   state: {
@@ -119,10 +119,40 @@ const auth = {
       })
     },
 
+    handleAddUser(state, params) {
+      return new Promise((resolve, reject) => {
+        addUser(params).then(res => {
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
     handleSaveUser(state, params) {
       return new Promise((resolve, reject) => {
         saveUser(params).then(res => {
           resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    handleDeleteUser(state, params) {
+      return new Promise((resolve, reject) => {
+        deleteUser(params).then(res => {
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    fetchUserList(state) {
+      return new Promise((resolve, reject) => {
+        getUserList().then(res => {
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })
