@@ -1,5 +1,6 @@
 import { ruleList, ruleDelete, addRule, editRule } from '@/api/auth/rule'
 import { groupList, groupDelete, addGroup, editGroup } from '@/api/auth/group'
+import { saveUser } from '@/api/auth/user'
 
 const auth = {
   state: {
@@ -104,8 +105,29 @@ const auth = {
           reject(error)
         })
       })
-    }
+    },
 
+    fetchGroups({ commit }) {
+      return new Promise((resolve, reject) => {
+        groupList().then(res => {
+          const data = res.data
+          commit('SET_GROUPS', data.groups)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    handleSaveUser(state, params) {
+      return new Promise((resolve, reject) => {
+        saveUser(params).then(res => {
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    }
   }
 }
 

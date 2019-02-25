@@ -14,6 +14,16 @@
           <el-input v-model="data.admin_password" type="password" />
         </el-form-item>
 
+        <el-form-item label="用户组别" prop="groups">
+          <el-select v-model="data.groups" multiple placeholder="请选择">
+            <el-option
+              v-for="group in groups"
+              :key="group.id"
+              :label="group.title"
+              :value="group.id" />
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="账户状态" prop="admin_status">
           <el-radio-group v-model="data.admin_status">
             <el-radio :label="1">启用</el-radio>
@@ -23,7 +33,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetForm('accountForm')">重置</el-button>
-        <el-button type="primary" @click="submitForm('accountForm')">确 定</el-button>
+        <el-button :loading="loading" type="primary" @click="submitForm('accountForm')">确 定</el-button>
       </span>
     </el-dialog>
     <el-button @click="dialog = true">添加</el-button>
@@ -34,22 +44,33 @@
 export default {
   data() {
     return {
+      loading: false,
       data: {
         admin_user: '',
         admin_nickname: '',
         admin_password: '',
-        admin_status: 1
+        admin_status: 1,
+        groups: []
       },
       rules: {
         admin_user: [{ required: true, message: '必须', trigger: 'blur' }],
         admin_nickname: [{ required: true, message: '必须', trigger: 'blur' }],
         admin_password: [{ required: true, message: '必须', trigger: 'blur' }],
-        admin_status: [{ required: true, message: '必须', trigger: 'change' }]
+        admin_status: [{ required: true, message: '必须', trigger: 'change' }],
+        groups: [{ required: true, message: '必须', trigger: 'change' }]
       },
 
       dialog: false,
       select: false
     }
+  },
+  computed: {
+    groups() {
+      return this.$store.state.auth.groups
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchGroups')
   },
   methods: {
     changes(e) {
@@ -66,8 +87,18 @@ export default {
       })
     },
     submitSave() {
-      this.$store.dispatch('saveUser', this.data).then(() => {
+      const temp = { ...this.data }
+      temp.groups = temp.groups.join(',')
+      this.loading = true
+      this.$store.dispatch('handleSaveUser', temp).then(() => {
+        this.closeDialog()
+      }).catch(() => {
+        this.closeDialog()
       })
+    },
+    closeDialog() {
+      this.loading = false
+      this.dialog = false
     }
   }
 }
