@@ -127,6 +127,7 @@ export default {
       this.loading = true
       this.$store.dispatch(action, temp).then(() => {
         this.closeDialog()
+        this.fetch()
       }).catch(() => {
         this.closeDialog()
       })
