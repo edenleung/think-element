@@ -30,6 +30,9 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
+import permission from '@/directive/permission/permission.js'
+Vue.directive('permission', permission)
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -12,6 +12,9 @@ export default{
 
 <style lang="sass">
 #app .app-main
-  padding: 20px 26px
+  margin: 20px
+  > div
+    padding: 24px
+    background: #fff
 </style>
 

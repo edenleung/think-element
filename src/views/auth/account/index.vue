@@ -1,8 +1,8 @@
 <template>
-  <div class="user">
+  <div v-loading="loading" class="user">
     <el-dialog :visible.sync="dialog" :before-close="handleClose" title="提示" width="30%">
       <el-form ref="accountForm" :model="data" :rules="rules" label-width="100px">
-        <el-form-item label="登录名称" prop="admin_user">
+        <el-form-item label="登录账号" prop="admin_user">
           <el-input v-model="data.admin_user" :readonly="selectd"/>
         </el-form-item>
 
@@ -38,12 +38,28 @@
         <el-button :loading="loading" type="primary" @click="submitForm('accountForm')">确 定</el-button>
       </span>
     </el-dialog>
-    <el-button @click="dialog = true">添加</el-button>
 
-    <el-table v-loading="!tableData" :data="tableData" style="width: 100%" stripe border>
+    <el-button v-permission="['auth-account-add']" type="primary" @click="dialog = true" >添加</el-button>
+    <el-row class="account-search">
+      <el-form ref="form" :model="form" label-width="10px">
+        <el-form-item >
+          <el-input v-model="form.keyword" placeholder="搜索账号" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="fetch()">搜索</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
+    <el-table v-loading="!tableData" :data="tableData" style="width: 100%" stripe>
       <el-table-column label="名称">
         <template slot-scope="scope">
-          <p v-html="scope.row.admin_user" />
+          <p v-html="scope.row.admin_nickname" />
+        </template>
+      </el-table-column>
+
+      <el-table-column label="登录账号">
+        <template slot-scope="scope">
+          <p v-html="scope.row.admin_nickname" />
         </template>
       </el-table-column>
 
@@ -61,8 +77,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="text" @click="handleClick(scope.row)">编辑</el-button>
-          <el-button size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['auth-account-update']" size="small" type="text" @click="handleClick(scope.row)" >编辑</el-button>
+          <el-button v-permission="['auth-account-delete']" size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -91,7 +107,10 @@ export default {
       },
       tableData: [],
       dialog: false,
-      selectd: false
+      selectd: false,
+      form: {
+        keyword: ''
+      }
     }
   },
   computed: {
@@ -105,7 +124,9 @@ export default {
   },
   methods: {
     fetch() {
+      this.loading = true
       this.$store.dispatch('fetchUserList').then(res => {
+        this.loading = false
         this.tableData = res
       })
     },
@@ -173,3 +194,20 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.account-search
+  margin-bottom: 15px
+  display: flex
+  justify-content: flex-end
+  > div
+    flex: 1
+    color: red
+    font-size: 20px
+    text-align: center
+  .el-form
+    display: flex
+    .el-form-item
+      margin-bottom: 0
+</style>
+

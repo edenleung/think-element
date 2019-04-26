@@ -28,6 +28,9 @@
         <el-form-item label="规则" prop="name">
           <el-input v-model="formData.name" type="text" placeholder="规则" auto-complete="off" />
         </el-form-item>
+        <el-form-item label="菜单路由" prop="role">
+          <el-input v-model="formData.role" type="text" placeholder="菜单路由" auto-complete="off" />
+        </el-form-item>
         <el-form-item label="启用">
           <el-switch v-model="formData.status" />
         </el-form-item>
@@ -41,10 +44,10 @@
 
     <el-row style="margin-bottom:15px">
       <el-button-group>
-        <el-button type="primary" icon="el-icon-plus" @click="dialogVisible= true">添加</el-button>
+        <el-button v-permission="['auth-rule-add']" type="primary" @click="dialogVisible= true">添加</el-button>
       </el-button-group>
     </el-row>
-    <el-table :data="tableData" style="width: 100%" stripe border>
+    <el-table :data="tableData" style="width: 100%" stripe>
       <el-table-column label="名称">
         <template slot-scope="scope">
           <p v-html="scope.row.cname" />
@@ -54,6 +57,12 @@
       <el-table-column prop="name" label="规则">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.name }}</el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="菜单路由">
+        <template slot-scope="scope">
+          <el-tag>{{ scope.row.role }}</el-tag>
         </template>
       </el-table-column>
 
@@ -71,8 +80,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="handleClick(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['auth-rule-update']" type="text" size="small" @click="handleClick(scope.row)">编辑</el-button>
+          <el-button v-permission="['auth-rule-delete']" type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,12 +97,14 @@ export default {
         pid: 0,
         title: '',
         name: '',
-        status: true
+        status: true,
+        role: ''
       },
       rules: {
         pid: { required: true, message: '父级必须', trigger: 'change' },
-        title: { required: true, message: '名称必须', trigger: 'change' },
-        name: { required: true, message: '规则必须', trigger: 'change' }
+        title: { required: true, message: '名称必须', trigger: 'blur' },
+        name: { required: true, message: '规则必须', trigger: 'blur' },
+        role: { required: true, message: '菜单路由必须', trigger: 'blur' }
       },
       selected: false
     }
@@ -125,7 +136,8 @@ export default {
         pid: row.pid,
         title: row.title,
         name: row.name,
-        status: status
+        status: status,
+        role: row.role
       }
 
       this.dialogVisible = true

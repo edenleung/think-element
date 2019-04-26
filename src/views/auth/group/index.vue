@@ -27,10 +27,10 @@
 
     <el-row style="margin-bottom:15px">
       <el-button-group>
-        <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加</el-button>
+        <el-button v-permission="['auth-group-add']" type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加</el-button>
       </el-button-group>
     </el-row>
-    <el-table v-loading="!tableData" :data="tableData" style="width: 100%" stripe border>
+    <el-table v-loading="!tableData" :data="tableData" style="width: 100%" stripe>
       <el-table-column label="名称">
         <template slot-scope="scope">
           <p v-html="scope.row.title" />
@@ -51,8 +51,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="text" @click="handleClick(scope.row)">编辑</el-button>
-          <el-button size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-permission="['auth-group-update']" size="small" type="text" @click="handleClick(scope.row)">编辑</el-button>
+          <el-button v-permission="['auth-group-delete']" size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
