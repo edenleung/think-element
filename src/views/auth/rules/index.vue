@@ -44,7 +44,7 @@
 
     <el-row style="margin-bottom:15px">
       <el-button-group>
-        <el-button v-permission="['auth-rule-add']" type="primary" @click="dialogVisible= true">添加</el-button>
+        <el-button v-action:add type="primary" @click="dialogVisible= true">添加</el-button>
       </el-button-group>
     </el-row>
     <el-table :data="tableData" style="width: 100%" stripe>
@@ -80,8 +80,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button v-permission="['auth-rule-update']" type="text" size="small" @click="handleClick(scope.row)">编辑</el-button>
-          <el-button v-permission="['auth-rule-delete']" type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-action:update type="text" size="small" @click="handleClick(scope.row)">编辑</el-button>
+          <el-button v-action:delete type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

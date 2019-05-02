@@ -39,7 +39,7 @@
       </span>
     </el-dialog>
 
-    <el-button v-permission="['auth-account-add']" type="primary" @click="dialog = true" >添加</el-button>
+    <el-button v-action:add type="primary" @click="dialog = true" >添加</el-button>
     <el-row class="account-search">
       <el-form ref="form" :model="form" label-width="10px">
         <el-form-item >
@@ -77,8 +77,8 @@
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button v-permission="['auth-account-update']" size="small" type="text" @click="handleClick(scope.row)" >编辑</el-button>
-          <el-button v-permission="['auth-account-delete']" size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-action:update size="small" type="text" @click="handleClick(scope.row)" >编辑</el-button>
+          <el-button v-action:delete size="small" type="text" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
 

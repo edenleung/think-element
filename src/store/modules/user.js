@@ -68,9 +68,19 @@ const user = {
             reject('Verification failed, please login again.')
           }
           const data = response.data
+          if (data.role && data.role.permissions.length > 0) { // 验证返回的roles是否是一个非空数组
+            const role = data.role
+            role.permissions = data.role.permissions
 
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
+            role.permissions.map(per => {
+              if (per.actionEntitySet != null && per.actionEntitySet.length > 0) {
+                const action = per.actionEntitySet.map(action => { return action.action })
+                per.actionList = action
+              }
+            })
+            role.permissionList = role.permissions.map(permission => { return permission.permissionId })
+
+            commit('SET_ROLES', data.role)
           } else {
             reject('getInfo: roles must be a non-null array!')
           }
