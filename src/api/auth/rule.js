@@ -1,16 +1,9 @@
 import request from '@/utils/request'
 
-export function ruleList() {
+export function fetchRule() {
   return request({
     url: '/auth/rule',
     method: 'get'
-  })
-}
-
-export function ruleDelete(id) {
-  return request({
-    url: '/auth/rule/' + id,
-    method: 'delete'
   })
 }
 
@@ -22,10 +15,24 @@ export function addRule(params) {
   })
 }
 
-export function editRule(params) {
+export function updateRule(id, data) {
+  return request({
+    url: '/auth/rule/' + id,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteRule(params) {
   return request({
     url: '/auth/rule/' + params.id,
-    method: 'put',
-    data: params
+    method: 'delete'
+  })
+}
+
+export function fetchTree() {
+  return request({
+    url: '/auth/tree',
+    method: 'get'
   })
 }

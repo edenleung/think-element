@@ -1,31 +1,31 @@
 import request from '@/utils/request'
 
-export function getUserList() {
+export function fetchUser() {
   return request({
     url: '/auth/user',
     method: 'get'
   })
 }
 
-export function addUser(params) {
+export function addUser(data) {
   return request({
     url: '/auth/user',
     method: 'post',
-    data: params
+    data
   })
 }
 
-export function saveUser(params) {
-  return request({
-    url: '/auth/user/' + params.admin_id,
-    method: 'put',
-    data: params
-  })
-}
-
-export function deleteUser(id) {
+export function updateUser(id, data) {
   return request({
     url: '/auth/user/' + id,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteUser(params) {
+  return request({
+    url: '/auth/user/' + params.id,
     method: 'delete'
   })
 }

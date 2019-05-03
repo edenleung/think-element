@@ -13,8 +13,14 @@ export default{
 <style lang="sass">
 #app .app-main
   margin: 20px
-  > div
-    padding: 24px
-    background: #fff
+#app
+  .tools
+    margin-bottom: 15px
+  .rule-list
+    .el-tag
+      margin-right: 8px
+    padding-left: 12px
+    padding-right: 12px
+    margin-bottom: 12px
 </style>
 

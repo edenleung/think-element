@@ -1,43 +1,31 @@
-import { ruleList, ruleDelete, addRule, editRule } from '@/api/auth/rule'
-import { groupList, groupDelete, addGroup, editGroup } from '@/api/auth/group'
-import { addUser, getUserList, saveUser, deleteUser } from '@/api/auth/user'
+import { fetchRule, addRule, updateRule, deleteRule, fetchTree } from '@/api/auth/rule'
+import { fetchRole, addRole, updateRole, deleteRole } from '@/api/auth/role'
+import { fetchUser, addUser, updateUser, deleteUser } from '@/api/auth/user'
 
 const auth = {
   state: {
-    rules: [],
-    groups: [],
-    groups_tree: []
   },
 
   mutations: {
-    SET_RULES: (state, data) => {
-      state.rules = data
-    },
-    SET_GROUPS: (state, data) => {
-      state.groups = data
-    },
-    SET_GROUPS_TREE: (state, data) => {
-      state.groups_tree = data
-    }
   },
 
   actions: {
-    fetchRules({ commit }) {
+    fetchTree() {
       return new Promise((resolve, reject) => {
-        ruleList().then(res => {
+        fetchTree().then(res => {
           const data = res.data
-          commit('SET_RULES', data)
-          resolve()
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
       })
     },
 
-    deleteRule(state, id) {
+    fetchRule(state) {
       return new Promise((resolve, reject) => {
-        ruleDelete(id).then(() => {
-          resolve()
+        fetchRule().then(res => {
+          const data = res.data
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -54,9 +42,11 @@ const auth = {
       })
     },
 
-    editRule(state, params) {
+    updateRule(state, data) {
+      const id = data.selectId
+      delete data.selectId
       return new Promise((resolve, reject) => {
-        editRule(params).then(() => {
+        updateRule(id, data).then(() => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -64,22 +54,30 @@ const auth = {
       })
     },
 
-    fetchGroup({ commit }) {
+    deleteRule(state, params) {
       return new Promise((resolve, reject) => {
-        groupList().then(res => {
+        deleteRule(params).then(() => {
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    fetchRole({ commit }) {
+      return new Promise((resolve, reject) => {
+        fetchRole().then(res => {
           const data = res.data
-          commit('SET_GROUPS', data.groups)
-          commit('SET_GROUPS_TREE', data.rules)
-          resolve()
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
       })
     },
 
-    deleteGroup(state, id) {
+    addRole(state, params) {
       return new Promise((resolve, reject) => {
-        groupDelete(id).then(() => {
+        addRole(params).then(() => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -87,9 +85,11 @@ const auth = {
       })
     },
 
-    addGroup(state, params) {
+    updateRole(state, data) {
+      const id = data.selectId
+      delete data.selectId
       return new Promise((resolve, reject) => {
-        addGroup(params).then(() => {
+        updateRole(id, data).then(() => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -97,9 +97,9 @@ const auth = {
       })
     },
 
-    editGroup(state, params) {
+    deleteRole(state, params) {
       return new Promise((resolve, reject) => {
-        editGroup(params).then(() => {
+        deleteRole(params).then(() => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -107,21 +107,19 @@ const auth = {
       })
     },
 
-    fetchGroups({ commit }) {
+    fetchUser(state) {
       return new Promise((resolve, reject) => {
-        groupList().then(res => {
-          const data = res.data
-          commit('SET_GROUPS', data.groups)
-          resolve()
+        fetchUser().then(res => {
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })
       })
     },
 
-    handleAddUser(state, params) {
+    addUser(state, data) {
       return new Promise((resolve, reject) => {
-        addUser(params).then(res => {
+        addUser(data).then(res => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -129,9 +127,11 @@ const auth = {
       })
     },
 
-    handleSaveUser(state, params) {
+    updateUser(state, data) {
+      const id = data.selectId
+      delete data.selectId
       return new Promise((resolve, reject) => {
-        saveUser(params).then(res => {
+        updateUser(id, data).then(res => {
           resolve()
         }).catch(error => {
           reject(error)
@@ -139,20 +139,10 @@ const auth = {
       })
     },
 
-    handleDeleteUser(state, params) {
+    deleteUser(state, params) {
       return new Promise((resolve, reject) => {
         deleteUser(params).then(res => {
           resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    fetchUserList(state) {
-      return new Promise((resolve, reject) => {
-        getUserList().then(res => {
-          resolve(res.data)
         }).catch(error => {
           reject(error)
         })
