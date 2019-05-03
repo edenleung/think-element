@@ -30,3 +30,9 @@ try_files $uri $uri/ /index.html last;
 ```
 #### 后端API配置
 [修改此处](https://github.com/xiaodit/think-element/blob/master/config/dev.env.js#L4)
+
+### 权限
+#### 按钮
+```
+v-action:xxx
+```
