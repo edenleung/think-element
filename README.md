@@ -5,7 +5,7 @@ ThinkPHP 5.1 与 Vue Element Admin 基础权限系统
 
 预览地址: https://ele.xiaodim.com
 
-文档: https://pro.loacg.com/docs/getting-started
+文档: https://panjiachen.github.io/vue-element-admin-site/zh  
 
 ### 账号
 * 超级管理员 `admin, 1234` 
