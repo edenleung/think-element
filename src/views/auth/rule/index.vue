@@ -69,8 +69,8 @@
                   <div style="margin-bottom:15px">唯一识别码: {{ action.role }}</div>
 
                   <div style="text-align: right; margin: 0">
-                    <el-button type="primary" size="mini" @click="openModal(action)">编辑</el-button>
-                    <el-button type="danger" size="mini" style="margin-left:0" @click="handleDelete(action)">删除</el-button>
+                    <el-button type="primary" v-action:update size="mini" @click="openModal(action)">编辑</el-button>
+                    <el-button type="danger" v-action:delete size="mini" style="margin-left:0" @click="handleDelete(action)">删除</el-button>
                   </div>
 
                   <el-tag slot="reference">{{ action.title }}</el-tag>
