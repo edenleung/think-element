@@ -3,7 +3,7 @@ ThinkPHP 5.1 与 Vue Element Admin 基础权限系统
 
 后端: https://github.com/xiaodit/think-admin  
 
-预览地址: https://ant.xiaodim.com
+预览地址: https://ele.xiaodim.com
 
 文档: https://pro.loacg.com/docs/getting-started
 
