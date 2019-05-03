@@ -89,12 +89,12 @@ export const asyncRouterMap = [
     meta: {
       title: 'auth',
       icon: 'dashboard',
-      roles: ['rule', 'role', 'user']
+      roles: ['rule', 'role', 'account']
     },
     children: [
       { path: 'rule', component: () => import('@/views/auth/rule/index'), name: 'rule', meta: { title: 'rule', roles: ['rule'] }},
-      { path: 'role', component: () => import('@/views/auth/role/index'), name: 'role', meta: { title: 'rule', roles: ['role'] }},
-      { path: 'user', component: () => import('@/views/auth/user/index'), name: 'user', meta: { title: 'user', roles: ['user'] }}
+      { path: 'role', component: () => import('@/views/auth/role/index'), name: 'role', meta: { title: 'role', roles: ['role'] }},
+      { path: 'account', component: () => import('@/views/auth/account/index'), name: 'account', meta: { title: 'account', roles: ['account'] }}
     ]
   },
   { path: '*', redirect: '/404', hidden: true }

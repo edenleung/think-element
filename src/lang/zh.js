@@ -4,7 +4,7 @@ export default {
     auth: '权限管理',
     rule: '规则管理',
     role: '角色管理',
-    user: '管理员管理'
+    account: '管理员管理'
   },
   navbar: {
     logOut: '退出登录',

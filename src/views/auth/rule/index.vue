@@ -13,7 +13,7 @@
           <el-input v-model="form.role" type="text" placeholder="前端路由菜单识别码" auto-complete="off" />
         </el-form-item>
         <el-form-item label="权限名称" prop="title">
-          <el-input v-model="form.title" type="text" placeholder="权限名称!" auto-complete="off" />
+          <el-input v-model="form.title" type="text" placeholder="权限名称" auto-complete="off" />
         </el-form-item>
         <el-form-item label="权限规则" prop="name">
           <el-input v-model="form.name" type="text" placeholder="模块/控制器/方法" auto-complete="off" />

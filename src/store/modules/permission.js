@@ -1,15 +1,17 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
 
 /**
- * 通过meta.role判断是否与当前用户权限匹配
- * @param roles
+ * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
+ *
+ * @param permission
  * @param route
+ * @returns {boolean}
  */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.permission) {
+function hasPermission(permission, route) {
+  if (route.meta && route.meta.roles) {
     let flag = false
     for (let i = 0, len = permission.length; i < len; i++) {
-      flag = route.meta.permission.includes(permission[i])
+      flag = route.meta.roles.includes(permission[i])
       if (flag) {
         return true
       }

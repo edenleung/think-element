@@ -192,11 +192,14 @@ export default {
       this.visible = false
     },
     handleClick(row) {
+      const selected = row.groups.split(',').map((item) => {
+        return parseInt(item)
+      })
       this.form = {
         admin_user: row.admin_user,
         admin_nickname: row.admin_nickname,
         admin_status: row.admin_status,
-        groups: row.groups.split(',')
+        groups: selected
       }
       this.visible = true
       this.selected = row.admin_id
