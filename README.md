@@ -22,7 +22,7 @@ npm run dev
 ```
 #### 打包
 ```
-npm run build
+npm run build:prod
 ```
 #### 刷新404问题
 ```nginx
