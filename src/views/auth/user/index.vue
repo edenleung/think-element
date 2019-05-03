@@ -67,7 +67,7 @@
         <el-button v-action:add type="primary" plain @click="visible = true">添加</el-button>
       </el-row>
 
-      <el-table v-loading="!data" :data="data" style="width: 100%" stripe>
+      <el-table v-loading="loading" :data="data" style="width: 100%" stripe>
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-row>

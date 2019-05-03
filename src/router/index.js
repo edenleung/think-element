@@ -87,14 +87,14 @@ export const asyncRouterMap = [
     component: Layout,
     name: 'auth',
     meta: {
-      title: '权限管理',
+      title: 'auth',
       icon: 'dashboard',
       roles: ['rule', 'role', 'user']
     },
     children: [
-      { path: 'rule', component: () => import('@/views/auth/rule/index'), name: 'rule', meta: { title: '规则管理', roles: ['rule'] }},
-      { path: 'role', component: () => import('@/views/auth/role/index'), name: 'role', meta: { title: '角色管理', roles: ['role'] }},
-      { path: 'user', component: () => import('@/views/auth/user/index'), name: 'user', meta: { title: '用户管理', roles: ['user'] }}
+      { path: 'rule', component: () => import('@/views/auth/rule/index'), name: 'rule', meta: { title: 'rule', roles: ['rule'] }},
+      { path: 'role', component: () => import('@/views/auth/role/index'), name: 'role', meta: { title: 'rule', roles: ['role'] }},
+      { path: 'user', component: () => import('@/views/auth/user/index'), name: 'user', meta: { title: 'user', roles: ['user'] }}
     ]
   },
   { path: '*', redirect: '/404', hidden: true }
