@@ -4,6 +4,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
+import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -18,6 +19,8 @@ const whiteList = ['/login', '/auth-redirect']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
+  to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
+
   if (getToken()) { // determine if there has token
     /* has token*/
     if (to.path === '/login') {
