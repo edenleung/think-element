@@ -9,7 +9,7 @@ before_install:
   - yarn
   
 script:
-  - yarn run build
+  - yarn run build:prod
   
 after_script:
   - chmod 600 /home/travis/build/xiaodit/think-element/deploy/file
