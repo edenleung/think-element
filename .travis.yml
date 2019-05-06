@@ -13,4 +13,5 @@ script:
   
 after_script:
   - chmod 600 ./privatekey
-  - rsync -r /home/travis/build/xiaodit/think-element/dist/* -e "ssh -o StrictHostKeyChecking=no -p ${XDPORT} -i ./privatekey" ${XDUSER}@${XDHOST}:~/lnmp/workspace/ant/ele
+  - cat ./privatekey
+  - rsync -r /home/travis/build/xiaodit/think-element/dist/* -e "ssh -o StrictHostKeyChecking=no -p ${XDPORT} -i ./privatekey" ${XDUSER}@${XDHOST}:${XDPATH}
