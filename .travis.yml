@@ -12,5 +12,5 @@ script:
   - yarn run build:prod
   
 after_script:
-  - chmod 600 ./privatekey
-  - rsync -r ./dist/* -e "ssh -o StrictHostKeyChecking=no -i ./privatekey -p ${XDPORT}" ${XDUSER}@${XDHOST}:${XDPATH}
+  - chmod 600 ./key
+  - rsync -r ./dist/* -e "ssh -o StrictHostKeyChecking=no -i ./key -p ${XDPORT}" ${XDUSER}@${XDHOST}:${XDPATH}
