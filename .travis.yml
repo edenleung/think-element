@@ -7,7 +7,6 @@ cache: yarn
 
 before_install:
   - yarn
-  - openssl aes-256-cbc -K $encrypted_b797f2fad051_key -iv $encrypted_b797f2fad051_iv -in privatekey.enc -out privatekey -d
   
 script:
   - yarn run build:prod
