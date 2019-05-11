@@ -21,9 +21,9 @@ const auth = {
       })
     },
 
-    fetchRule(state) {
+    fetchRule(state, params) {
       return new Promise((resolve, reject) => {
-        fetchRule().then(res => {
+        fetchRule(params).then(res => {
           const data = res.data
           resolve(data)
         }).catch(error => {
@@ -64,9 +64,9 @@ const auth = {
       })
     },
 
-    fetchRole({ commit }) {
+    fetchRole({ commit }, params) {
       return new Promise((resolve, reject) => {
-        fetchRole().then(res => {
+        fetchRole(params).then(res => {
           const data = res.data
           resolve(data)
         }).catch(error => {
@@ -107,9 +107,9 @@ const auth = {
       })
     },
 
-    fetchUser(state) {
+    fetchUser(state, params) {
       return new Promise((resolve, reject) => {
-        fetchUser().then(res => {
+        fetchUser(params).then(res => {
           resolve(res.data)
         }).catch(error => {
           reject(error)

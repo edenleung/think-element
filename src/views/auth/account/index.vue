@@ -34,8 +34,8 @@
             { required: true, message: '请选择角色！', trigger: 'change' }
           ]"
           label="选择角色"
-          prop="groups">
-          <el-select v-model="form.groups" multiple placeholder="请选择" style="width:100%">
+          prop="roles">
+          <el-select v-model="form.roles" multiple placeholder="请选择" style="width:100%">
             <el-option
               v-for="(role, index) in roles"
               :key="index"
@@ -108,6 +108,17 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-row class="page-pagination">
+        <el-pagination
+          :hide-on-single-page="pagination.total === 1"
+          :current-page="pagination.current"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          background
+          layout="prev, pager, next"
+          @current-change="handleChangePage"/>
+      </el-row>
     </el-card>
   </section>
 </template>
@@ -124,37 +135,40 @@ export default {
         admin_nickname: '',
         admin_password: '',
         admin_status: 1,
-        groups: []
+        roles: []
       },
       rules: [],
       roles: [],
       data: [],
       visible: false,
       selectd: false,
-      selected: 0
+      selected: 0,
+      pagination: {}
     }
   },
   mounted() {
     this.fetch()
-    this.fetchRule().then(res => {
-      this.rules = res
-    })
-    this.fetchRole().then(res => {
-      this.roles = res.roles
-    })
   },
   methods: {
     ...mapActions([
       'fetchUser',
-      'deleteUser',
-      'fetchRule',
-      'fetchRole'
+      'deleteUser'
     ]),
-    fetch() {
+    fetch(params = {}) {
       this.loading = true
-      this.fetchUser().then(res => {
+      this.fetchUser(params).then(res => {
+        const { roles, rules, users } = res
         this.loading = false
-        this.data = res
+        this.data = users.data
+        this.pagination = users.pagination
+        this.rules = rules.data
+        this.roles = roles.data
+      })
+    },
+    handleChangePage(page) {
+      this.fetch({
+        page: page,
+        pageSize: this.pagination.pageSize
       })
     },
     submitForm() {

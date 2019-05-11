@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchUser() {
+export function fetchUser(params) {
   return request({
     url: '/auth/user',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

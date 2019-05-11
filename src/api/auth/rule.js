@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchRule() {
+export function fetchRule(params) {
   return request({
     url: '/auth/rule',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

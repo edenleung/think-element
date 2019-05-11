@@ -95,6 +95,17 @@
         </el-table-column>
       </el-table>
 
+      <el-row class="page-pagination">
+        <el-pagination
+          :hide-on-single-page="pagination.total === 1"
+          :current-page="pagination.current"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          background
+          layout="prev, pager, next"
+          @current-change="handleChangePage"/>
+      </el-row>
+
     </el-card>
   </section>
 </template>
@@ -116,7 +127,8 @@ export default {
         name: '',
         status: 1
       },
-      selected: 0
+      selected: 0,
+      pagination: {}
     }
   },
   mounted() {
@@ -127,12 +139,20 @@ export default {
       'fetchRole',
       'deleteRole'
     ]),
-    fetch() {
+    fetch(params = {}) {
       this.loading = true
-      this.fetchRole().then((res) => {
-        this.data = res.roles
-        this.rules = res.rules
+      this.fetchRole(params).then((res) => {
+        const { roles, rules } = res
+        this.data = roles.data
+        this.pagination = roles.pagination
+        this.rules = rules.data
         this.loading = false
+      })
+    },
+    handleChangePage(page) {
+      this.fetch({
+        page: page,
+        pageSize: this.pagination.pageSize
       })
     },
     submitForm(formName) {

@@ -69,8 +69,8 @@
                   <div style="margin-bottom:15px">唯一识别码: {{ action.role }}</div>
 
                   <div style="text-align: right; margin: 0">
-                    <el-button type="primary" v-action:update size="mini" @click="openModal(action)">编辑</el-button>
-                    <el-button type="danger" v-action:delete size="mini" style="margin-left:0" @click="handleDelete(action)">删除</el-button>
+                    <el-button v-action:update type="primary" size="mini" @click="openModal(action)">编辑</el-button>
+                    <el-button v-action:delete type="danger" size="mini" style="margin-left:0" @click="handleDelete(action)">删除</el-button>
                   </div>
 
                   <el-tag slot="reference">{{ action.title }}</el-tag>
@@ -99,6 +99,18 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-row class="page-pagination">
+        <el-pagination
+          :hide-on-single-page="pagination.total === 1"
+          :current-page="pagination.current"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          background
+          layout="prev, pager, next"
+          @current-change="handleChangePage"/>
+      </el-row>
+
     </el-card>
 
   </section>
@@ -127,7 +139,8 @@ export default {
         name: { required: true, message: '请输入权限规则!', trigger: 'blur' },
         role: { required: true, message: '请输入唯一识别码!', trigger: 'blur' }
       },
-      selected: 0
+      selected: 0,
+      pagination: {}
     }
   },
   mounted() {
@@ -142,11 +155,19 @@ export default {
       'fetchTree',
       'deleteRule'
     ]),
-    fetch() {
+    fetch(params = {}) {
       this.loading = true
-      this.fetchRule().then((res) => {
-        this.data = res
+      this.fetchRule(params).then((res) => {
+        const { data, pagination } = res
+        this.data = data
+        this.pagination = pagination
         this.loading = false
+      })
+    },
+    handleChangePage(page) {
+      this.fetch({
+        page: page,
+        pageSize: this.pagination.pageSize
       })
     },
     openModal(row) {

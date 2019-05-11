@@ -25,5 +25,8 @@ export default{
     padding-left: 12px
     padding-right: 12px
     margin-bottom: 12px
+  .page-pagination
+    margin-top: 20px
+    text-align: right
 </style>
 
