@@ -9,8 +9,8 @@
         status-icon
         label-width="100px"
       >
-        <el-form-item label="唯一识别码" prop="role">
-          <el-input v-model="form.role" type="text" placeholder="前端路由菜单识别码" auto-complete="off" />
+        <el-form-item label="唯一识别码" prop="action">
+          <el-input v-model="form.action" type="text" placeholder="前端路由菜单识别码" auto-complete="off" />
         </el-form-item>
         <el-form-item label="权限名称" prop="title">
           <el-input v-model="form.title" type="text" placeholder="权限名称" auto-complete="off" />
@@ -56,9 +56,10 @@
         <el-table-column prop="title" label="权限名称" />
 
         <el-table-column label="可操作权限">
+
           <template slot-scope="scope">
             <div class="actions">
-              <template v-for="(action, index) in scope.row.action">
+              <template v-for="(action, index) in scope.row.actions">
                 <el-popover
                   :key="index"
                   :ref="'popover_' + action.id"
@@ -66,7 +67,7 @@
                   title="详情"
                   @show="onShowPopover(action.id)"
                 >
-                  <div style="margin-bottom:15px">唯一识别码: {{ action.role }}</div>
+                  <div style="margin-bottom:15px">唯一识别码: {{ action.action }}</div>
 
                   <div style="text-align: right; margin: 0">
                     <el-button v-action:update type="primary" size="mini" @click="openModal(action)">编辑</el-button>
@@ -131,13 +132,13 @@ export default {
         title: '',
         name: '',
         status: 1,
-        role: ''
+        action: ''
       },
       rules: {
         pid: { required: true, message: '请选择所属组别!', trigger: 'change' },
         title: { required: true, message: '请输入权限名称!', trigger: 'blur' },
         name: { required: true, message: '请输入权限规则!', trigger: 'blur' },
-        role: { required: true, message: '请输入唯一识别码!', trigger: 'blur' }
+        action: { required: true, message: '请输入唯一识别码!', trigger: 'blur' }
       },
       selected: 0,
       pagination: {}
@@ -174,7 +175,7 @@ export default {
       this.form = {
         title: row.title,
         name: row.name,
-        role: row.role,
+        action: row.action,
         pid: row.pid,
         status: row.status
       }
@@ -183,7 +184,7 @@ export default {
     },
     onShowPopover(id) {
       this.data.map(item => {
-        item.action.map(action => {
+        item.actions.map(action => {
           if (id !== action.id) {
             this.$refs[`popover_${action.id}`][0].doClose()
           }
