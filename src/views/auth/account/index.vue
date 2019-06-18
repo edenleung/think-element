@@ -40,7 +40,7 @@
               v-for="(role, index) in roles"
               :key="index"
               :label="role.title"
-              :value="role.id" />
+              :value="role.id.toString()" />
           </el-select>
         </el-form-item>
 
@@ -75,8 +75,8 @@
                 <el-row>
                   <el-col :span="4">{{ item.title }}：</el-col>
                   <el-col :span="20">
-                    <template v-for="(action, i) in item.action">
-                      <el-tag v-if="props.row.rules.indexOf(action.id.toString()) !== -1" :key="i" size="small">
+                    <template v-for="(action, i) in item.actions">
+                      <el-tag v-if="props.row.rules.indexOf(action.id) !== -1" :key="i" size="small">
                         {{ action.title }}
                       </el-tag>
                     </template>
@@ -86,12 +86,12 @@
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="admin_nickname" label="账号名" />
-        <el-table-column prop="admin_user" label="登录账号" />
+        <el-table-column prop="nickname" label="账号名" />
+        <el-table-column prop="name" label="登录账号" />
 
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <template v-if="scope.row.admin_status">
+            <template v-if="scope.row.status">
               正常
             </template>
 
@@ -206,17 +206,17 @@ export default {
       this.visible = false
     },
     handleClick(row) {
-      const selected = row.groups.split(',').map((item) => {
-        return parseInt(item)
+      const selected = row.roles.map((item) => {
+        return item.id.toString()
       })
       this.form = {
-        admin_user: row.admin_user,
-        admin_nickname: row.admin_nickname,
-        admin_status: row.admin_status,
-        groups: selected
+        admin_user: row.name,
+        admin_nickname: row.nickname,
+        admin_status: row.status,
+        roles: selected
       }
       this.visible = true
-      this.selected = row.admin_id
+      this.selected = row.id
     },
     handleDelete(row) {
       this.$confirm('此操作将删除该用户吗, 是否继续?', '提示', {

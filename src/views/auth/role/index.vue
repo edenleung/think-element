@@ -37,7 +37,7 @@
           <el-col :span="4">{{ item.title }}</el-col>
           <el-col :span="20">
             <el-checkbox-group v-model="checkedList">
-              <el-checkbox v-for="(action, index) in item.action" :label="action.id" :key="index">{{ action.title }}</el-checkbox>
+              <el-checkbox v-for="(action, index) in item.actions" :label="action.id" :key="index">{{ action.title }}</el-checkbox>
             </el-checkbox-group>
           </el-col>
         </el-row>
@@ -52,16 +52,18 @@
       <el-row class="tools">
         <el-button v-action:add type="primary" plain @click="visible = true">添加</el-button>
       </el-row>
+
       <el-table v-loading="loading" :data="data" style="width: 100%" stripe>
         <el-table-column type="expand">
           <template slot-scope="props">
+
             <el-row>
               <el-col v-for="(item, index) in rules" :key="index" :span="12" class="rule-list">
                 <el-row>
                   <el-col :span="4">{{ item.title }}：</el-col>
                   <el-col :span="20">
-                    <template v-for="(action, i) in item.action">
-                      <el-tag v-if="props.row.rules.split(',').indexOf(action.id.toString()) !== -1" :key="i" size="small">
+                    <template v-for="(action, i) in item.actions">
+                      <el-tag v-if="props.row.permissions.indexOf(action.id) !== -1" :key="i" size="small">
                         {{ action.title }}
                       </el-tag>
                     </template>
@@ -196,7 +198,7 @@ export default {
         name: row.name
       }
 
-      this.checkedList = row.rules.split(',').map(item => parseInt(item))
+      this.checkedList = row.permissions.map(item => parseInt(item))
 
       this.visible = true
       this.selected = row.id
