@@ -7,8 +7,8 @@
             { required: true, message: '请输入登录账号！', trigger: 'blur' }
           ]"
           label="登录账号"
-          prop="admin_user">
-          <el-input v-model="form.admin_user" :readonly="selected > 0"/>
+          prop="name">
+          <el-input v-model="form.name" :readonly="selected > 0"/>
         </el-form-item>
 
         <el-form-item
@@ -16,8 +16,8 @@
             { required: selected === 0, message: '请输入登录密码!', trigger: 'blur' }
           ]"
           label="登录密码"
-          prop="admin_password">
-          <el-input v-model="form.admin_password" :placeholder="selected === 0 ? '请入登录密码' : '如需修改密码请输入新密码'" type="password" />
+          prop="password">
+          <el-input v-model="form.password" :placeholder="selected === 0 ? '请入登录密码' : '如需修改密码请输入新密码'" type="password" />
         </el-form-item>
 
         <el-form-item
@@ -25,8 +25,8 @@
             { required: true, message: '请输入用户名称！', trigger: 'blur' }
           ]"
           label="用户昵称"
-          prop="admin_nickname">
-          <el-input v-model="form.admin_nickname" />
+          prop="nickname">
+          <el-input v-model="form.nickname" />
         </el-form-item>
 
         <el-form-item
@@ -49,8 +49,8 @@
             { required: true, message: '请选择！', trigger: 'change' }
           ]"
           label="状态"
-          prop="admin_status">
-          <el-select v-model="form.admin_status" placeholder="请选择" style="width:100%">
+          prop="status">
+          <el-select v-model="form.status" placeholder="请选择" style="width:100%">
             <el-option :value="1" label="正常" />
             <el-option :value="0" label="禁用" />
           </el-select>
@@ -131,10 +131,10 @@ export default {
     return {
       loading: false,
       form: {
-        admin_user: '',
-        admin_nickname: '',
-        admin_password: '',
-        admin_status: 1,
+        name: '',
+        nickname: '',
+        password: '',
+        status: 1,
         roles: []
       },
       rules: [],
@@ -210,9 +210,9 @@ export default {
         return item.id.toString()
       })
       this.form = {
-        admin_user: row.name,
-        admin_nickname: row.nickname,
-        admin_status: row.status,
+        name: row.name,
+        nickname: row.nickname,
+        status: row.status,
         roles: selected
       }
       this.visible = true
