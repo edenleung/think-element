@@ -1,5 +1,5 @@
 module.exports = {
   NODE_ENV: '"production"',
   ENV_CONFIG: '"prod"',
-  BASE_API: '"https://auth.xiaodim.com"'
+  BASE_API: '"https://auth.xiaodim.com/index.php"'
 }
